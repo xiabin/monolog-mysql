@@ -140,7 +140,11 @@ class MySQLHandler extends AbstractProcessingHandler
             if ($value === 'time') {
                 $contentArray[$value] = $record['datetime']->format('U');
             } else {
-                $contentArray[$value] = $record[$value];
+                if (is_string($record[$value])) {
+                    $contentArray[$value] = $record[$value];
+                } else {
+                    $contentArray[$value] = json_encode($record[$value]);
+                }
             }
         }
 
